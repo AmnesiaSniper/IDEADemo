@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    li{list-style-type: none}
+    ul li{position: absolute}
+    .imgList{
+        width: 99999px;
+    }
+</style>
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script>
+
+    function Scroll(obj,speed,interval){ //父级容器，轮播速度，切换间隔
+        $("#"+obj).each(function() {
+            var $box = $(this),
+                $imgUl = $box.children(".imgList"),
+                $imgLi = $imgUl.children("li"),
+
+                n = $imgLi.length,
+                width = $imgLi.width(),
+                left = parseFloat($imgUl.css("left")),
+                k = 0,
+                Player;
+            $imgUl.css("width", n * width);
+
+
+            function scroll() {    //轮播事件
+                $imgUl.stop().animate({left: -width}, speed, function () {
+                    k += 1;
+                    $imgUl.css("left", 0);
+                    $imgUl.children("li:first").appendTo($(this));
+
+                    if (k >= n) {
+                        k = 0;
+                    }
+
+                });
+            }
+        });
+    }
+        $(function () {       //读取轮播事件
+            Scroll("vessel",600,2000);
+        });
+</script>
+
+<body>
+<div id="carousel">
+    <div id="vessel">
+        <ul class="imgList">
+            <li><img src="img/login_img.jpg"></li>
+            <li><img src="img/login_img.jpg"></li>
+            <li><img src="img/login_img.jpg"></li>
+            <li><img src="img/login_img.jpg" ></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

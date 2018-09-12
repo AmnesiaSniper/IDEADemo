@@ -1,0 +1,170 @@
+/*清除默认样式*/
+html {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: beige;
+}
+
+a {
+    text-decoration: none;
+    font-family: Consolas;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#header {
+    width: auto;
+    height: 30px;
+    border-bottom: 1px solid gainsboro
+}
+
+.start {
+    float: right;
+    font-size: 12px;
+    color: darkgrey;
+    margin-top: 8px;
+    letter-spacing: 7px;
+}
+
+.start a {
+    color: darkgrey;
+}
+
+.start a:hover {
+    color: blue;
+}
+
+#centers {
+    width: auto;
+    height: 600px;
+    background: azure;
+}
+
+#nav {
+    width: auto;
+    height: 45px;
+    background: grey;
+    border-bottom: 1px solid gainsboro;
+}
+
+.one-level {
+    float: left;
+    margin-left: 50px;
+    position: relative;
+}
+
+.one-level ul {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    opacity: 0.8;
+}
+
+.one-level a {
+    font-size: 18px;
+    line-height: 46px;
+    padding: 12px 20px 11px 20px;
+    background: grey;
+    color: #ff9900;
+}
+
+.one-level a:hover {
+    background: black;
+    color: yellow;
+}
+
+#carousel {
+    width: 1120px;
+    height: 500px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#vessel {
+    width: 1120px;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+
+#vessel .imgList {
+    width: 99999px;
+    height: 500px;
+    position: absolute;
+}
+
+#vessel .imgList li {
+    float: left;
+}
+
+#vessel .imgList li img {
+    width: 1120px;
+    height: 500px;
+}
+/*左右选择箭头显示样式*/
+#vessel .pre-nex {
+    top:50%;
+    margin-top: -40px;
+    width: 40px;
+    height: 60px;
+    background: red;
+    font: bold 40px/60px Simsun;
+    position: absolute;
+    cursor: pointer;
+}
+#vessel .pre-nex.show{display: block}
+#vessel .pre-nex.show:hover{background: black;opacity: 0.5}
+
+#vessel .prev{
+    left: 2%;
+    background-color: black;
+    width: 20px;
+    color: #666666;
+    opacity: 0.2;
+}
+#vessel .next{
+    right: 2%;
+    background-color: black;
+    width: 20px;
+    color: #666666;
+    opacity: 0.2;
+}
+
+/*焦点样式*/
+#vessel .btnList{
+    width: 120px;
+    height: 20px;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    margin: auto;
+    text-align: center;
+    position: absolute;
+}
+#vessel .btnList li{display: inline}
+#vessel .btnList li span{
+    display: inline-block;
+    width: 20px;
+    height: 10px;
+    margin: 0 2px;
+    background-color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+#vessel .btnList li.cur span{
+    background-color: orange;
+}

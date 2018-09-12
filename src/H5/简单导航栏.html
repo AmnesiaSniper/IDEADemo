@@ -1,0 +1,79 @@
+<!--
+jQuery Drop-down Menu/Navigation bar
+
+Copyright 2017-9-21, Jachin
+QQ: 381558301
+Email: 381558301@qq.com
+
+需脚本语言:jQuery
+纯静态页面
+
+功能的关键点:
+    父元素需要hover函数触发
+    子元素必须在父元素里面并且需要绝对定位(绝对定位不影响布局)
+
+兼容ie全家族 over~~~
+tip:ie8(包含)以下浏览器需要去除头部的注释,否则样式会出错.
+
+ -->
+<!DOCTYPE html>
+<html lang="ZH-CN">
+<head>
+    <meta charset="utf-8">
+    <title>导航栏,菜单栏下拉简单实现</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <style type="text/css">
+        /*样式初始化*/
+        body, dl, dd, h1, h2, h3, h4, h5, h6, p, form,ul,ol{margin:0; padding:0;}
+        ol,ul { list-style:none; }
+        .nav span{
+            display: inline-block;
+            height:36px;
+            width:120px;
+            background: #ff9900;
+            line-height: 36px;
+            text-align: center;
+            position: relative;
+        }
+        .nav ul{
+            position: absolute;
+            width:120px;
+            display: none;
+            background: #f90
+        }
+    </style>
+</head>
+<body>
+<div class="nav">
+        <span>导航栏-1
+            <ul>
+                <li>1-1</li>
+                <li>1-2</li>
+                <li>1-3</li>
+            </ul>
+        </span>
+    <span>导航栏-2
+            <ul>
+                <li>1-1</li>
+                <li>1-2</li>
+                <li>1-3</li>
+            </ul>
+        </span>
+    <span>导航栏-3
+            <ul>
+                <li>1-1</li>
+                <li>1-2</li>
+                <li>1-3</li>
+            </ul>
+        </span>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    //hover接收2个参数,第一个是经过,第二个是离开;
+    $('.nav span').hover(function(){
+        $(this).find('ul').show();
+    },function(){
+        $(this).find('ul').hide();
+    });
+</script>

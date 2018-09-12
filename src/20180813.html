@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<style type="text/css">
+    /*清除默认样式*/
+    html{padding: 0;margin: 0;}
+    body{padding: 0;margin: 0;}
+    a{text-decoration: none;}
+    li{list-style-type: none; float: left;}
+    ul{padding: 0;margin: 0;list-style: none;}
+
+    /*轮播图*/
+
+    #carousel{
+        margin-top: 10px;
+        width: 1378px;
+        background: gainsboro;
+    }
+
+    .banner {
+        /*相对定位元素经常被用来作为绝对定位元素的容器块。*/
+        position: relative;
+        width: 1120px;
+        height: 470px;
+        /*设置当元素的内容溢出其区域时发生的事情。*/
+        overflow: hidden;
+        background: bisque;
+}
+.banner .imgList {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 99999px;
+    height: 470px;
+}
+    .banner .imgList li img {
+        width: 1120px;
+        height: 470px;
+    }
+    /*左右选择箭头显示样式*/
+    .banner .pre-nex {
+        /*display: none;*/
+        position: absolute;
+        top:50%;
+        width: 40px;
+        height: 60px;
+        margin-top: -40px;
+        /* font:字体样式 字号/行高 字体*/
+        font:bold 40px/60px Simsun;
+        color: #0066ff;
+        text-align: center;
+        border:none;
+        /*css3属性 rgba括号中前3个数字代表着 red green blue三种颜色的rgb值，0-255，
+        最后一个是设定这个颜色的透明度即alpha值。范围从0到1，越接近1，代表透明度越低。*/
+        background: rgba(0,0,0,0.3);
+        /*鼠标移上去显示光标样式*/
+        cursor: pointer;
+    }
+    /*左右选择箭头操作样式*/
+    .banner .pre-nex.show{display: block}
+    .banner .pre-nex.show:hover{ background: black;opacity: 0.5}
+    .banner .prev{left: 2%;width: 20px;opacity:0.2; ;background: black;color:grey}
+    .banner .next{right: 2%;width: 20px;opacity:0.2; ;background: black;color:grey}
+
+    /*焦点样式*/
+    .banner .btnList {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 20px;
+        margin: auto;
+        width: 120px;
+        height: 20px;
+        text-align:center;
+        z-index: 2;
+    }
+
+    .banner .btnList li { display: inline; }
+    .banner .btnList li span {
+        /*对象呈现为inline对象，但是对象的内容作为block对象呈现。*/
+        display: inline-block;
+        width: 20px;
+        height: 10px;
+        margin: 0 5px;
+        /*给该属性元素添加圆角边框 四个角半径为6px*/
+        border-radius: 6px;
+        background-color:white;
+        cursor: pointer;
+    }
+    .banner .btnList li.cur span { background-color: orange; }
+</style>
+
+<body>
+<div id="carousel" align="center">
+    <div class="banner">
+
+            <!--轮播图-->
+            <ul class="imgList">
+                <li><a href="javascript:void(0);"><img src="img/banner/banner02.jpg" alt=""/></a></li>
+                <li><a href="javascript:void(0);"><img src="img/banner/banner01.jpg" alt=""/></a></li>
+                <li><a href="javascript:void(0);"><img src="img/banner/banner03.jpg" alt=""/></a></li>
+                <li><a href="javascript:void(0);"><img src="img/banner/banner02.jpg" alt=""/></a></li>
+            </ul>
+            <!--焦点-->
+            <ul class="btnList clearfix">
+                <li class="cur"><span></span></li>
+                <li><span></span></li>
+                <li><span></span></li>
+                <li><span></span></li>
+            </ul>
+            <!--左右选择箭头-->
+            <span class="pre-nex prev"><</span>
+            <span class="pre-nex next">></span>
+
+    </div>
+</div>
+
+<script>
+    //加载在文本读取之后的js语句 开始 =============================================================
+    function Scroll(obj,speed,interval){ //父级容器，轮播速度，切换间隔
+        $("."+obj).each(function(){
+            var $box = $(this),
+                $imgUl = $box.children(".imgList"),
+                $imgLi = $imgUl.children("li"),
+                $btnUl = $box.children(".btnList"),
+                $btnLi = $btnUl.children("li"),
+                $btnPreNex = $box.children(".pre-nex"),
+                $btnPre = $box.children(".prev"),
+                $btnNex = $box.children(".next"),
+                n = $imgLi.length,
+                width = $imgLi.width(),
+                left = parseFloat($imgUl.css("left")),
+                k = 0,
+                Player;
+            $imgUl.css("width",n*width);
+            function scroll(){    //轮播事件
+                $imgUl.stop().animate({left:-width},speed,function(){
+                    k += 1;
+                    $imgUl.css("left",0);
+                    $imgUl.children("li:first").appendTo($(this));
+                    $btnLi.removeClass('cur');
+                    if(k >= n){
+                        k = 0;
+                    }
+                    $btnUl.children("li").eq(k).addClass('cur');
+                });
+            }
+            $btnLi.click(function(){   //小圆点点击事件
+                var index = $btnLi.index(this);
+                $(this).addClass('cur').siblings("li").removeClass('cur');
+                if(index >= k){
+                    var dif = index-k;
+                    left = -dif*width;
+                    $imgUl.stop().animate({left:left},speed,function(){
+                        $imgUl.css("left",0);
+                        $imgUl.children("li:lt("+dif+")").appendTo($imgUl);
+                    });
+                }
+                else{
+                    var j = n-(k-index);
+                    $imgUl.css("left",(index-k)*width);
+                    $imgUl.children("li:lt("+j+")").appendTo($imgUl);
+                    $imgUl.stop().animate({left:0},speed);
+                }
+                k = index;
+            });
+            $btnPreNex.click(function(){  //左右按钮点击事件
+                var index = $btnLi.index(this);
+                if($(this).hasClass('next')){
+                    if(!$imgUl.is(":animated")){
+                        k += 1;
+                        $imgUl.animate({left:-width},speed,function(){
+                            $imgUl.css("left",0);
+                            $imgUl.children("li:first").appendTo($(this));
+                            if(k >= n){
+                                k = 0;
+                            }
+                            $btnUl.children("li").removeClass('cur').eq(k).addClass('cur');
+                        });
+                    }
+                }
+                else {
+                    if(!$imgUl.is(":animated")){
+                        k += -1;
+                        $imgUl.css("left",-width);
+                        $imgUl.children("li:last").prependTo($imgUl);
+                        $imgUl.stop().animate({left:0},speed);
+                        if(k < 0){
+                            k = n-1;
+                        }
+                        $btnUl.children("li").removeClass('cur').eq(k).addClass('cur');
+                    }
+                }
+            });
+            $box.hover(      //鼠标移入、移出事件
+                function(){
+                    clearInterval(Player);
+                    $btnPreNex.addClass('show');
+                },
+                function(){
+                    Player = setInterval(function(){scroll()},interval);
+                    $btnPreNex.removeClass('show');
+                }
+            );
+            Player = setInterval(function(){scroll()},interval);
+        });
+    }
+    $(function () {       //读取轮播事件
+        Scroll("banner",600,2000);
+    });
+</script>
+-->
+</body>
+</html>
